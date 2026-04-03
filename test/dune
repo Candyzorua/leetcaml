@@ -1,3 +1,5 @@
 (test
  (name test_leetcaml)
- (libraries leetcaml))
+ (libraries leetcaml base)
+ (preprocess
+  (pps ppx_jane)))

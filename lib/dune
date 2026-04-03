@@ -1,2 +1,5 @@
 (library
- (name leetcaml))
+ (name leetcaml)
+ (libraries base stdio core core_unix)
+ (preprocess
+  (pps ppx_jane)))

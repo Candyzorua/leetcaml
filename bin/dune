@@ -1,4 +1,6 @@
 (executable
  (public_name leetcaml)
  (name main)
- (libraries leetcaml))
+ (libraries leetcaml core core_unix core_unix.command_unix)
+ (preprocess
+  (pps ppx_jane)))
