@@ -1,5 +1,7 @@
+(include_subdirs unqualified)
+
 (library
  (name leetcaml)
- (libraries base stdio core core_unix)
+ (libraries base stdio core core_unix dynlink)
  (preprocess
   (pps ppx_jane)))

@@ -1,6 +1,7 @@
 (executable
  (public_name leetcaml)
  (name main)
+ (link_flags (:standard -linkall))
  (libraries leetcaml core core_unix core_unix.command_unix)
  (preprocess
   (pps ppx_jane)))
