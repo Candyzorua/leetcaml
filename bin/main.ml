@@ -1,12 +1,34 @@
 open Core
 
-let () =
+let run_cmd =
   Command.basic
-    ~summary:"Run an OCaml solution and judge it"
+    ~summary:"Run a solution file and judge it"
     (let open Command.Param in
      map
        (anon ("solution.ml" %: string))
        ~f:(fun submission_file () ->
          let result = Leetcaml.Judge.judge ~submission_file in
          Leetcaml.Report.print_result result))
-  |> Command_unix.run
+
+let describe_cmd =
+  Command.basic
+    ~summary:"Print the description of a problem"
+    (let open Command.Param in
+     map
+       (anon ("problem" %: string))
+       ~f:(fun slug () ->
+         match Leetcaml.Problem.find slug with
+         | None ->
+           eprintf "Unknown problem: %s\nAvailable: %s\n"
+             slug
+             (String.concat ~sep:", "
+                (List.map Leetcaml.Problem.all ~f:(fun p -> p.slug)));
+           exit 1
+         | Some p -> print_string p.description))
+
+let () =
+  Command_unix.run
+    (Command.group ~summary:"LeetCaml — an OCaml problem judge"
+       [ "run",      run_cmd
+       ; "describe", describe_cmd
+       ])
