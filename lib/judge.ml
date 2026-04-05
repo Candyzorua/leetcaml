@@ -43,21 +43,11 @@ let load cmxs_file =
     | None    -> Error "solution did not call Host.register"
     | Some r  -> Ok r
 
-(* Run the registered runner; collect failures via callback. *)
 let run_runner (module R : Host.Runner) =
-  let failures = ref [] in
-  match
-    (try
-       R.run ~on_result:(fun ~case_id ~passed ~msg ->
-         if not passed then failures := (case_id, msg) :: !failures);
-       `Done
-     with exn -> `Exn exn)
+  try R.run (); Accepted
   with
-  | `Exn exn -> Runtime_error (Exn.to_string exn)
-  | `Done ->
-    (match List.rev !failures with
-     | []                   -> Accepted
-     | (case_id, msg) :: _  -> Wrong_answer { case_id; msg })
+  | Problem_runner.Failed { case_id; msg } -> Wrong_answer { case_id; msg }
+  | exn -> Runtime_error (Exn.to_string exn)
 
 let judge ~submission_file =
   with_temp_dir (fun dir ->

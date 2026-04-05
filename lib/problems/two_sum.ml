@@ -32,5 +32,5 @@ module Make (Sol : S) = struct
     let nums, target = [%of_sexp: int array * int] sexp in
     [%sexp_of: int * int] (Sol.two_sum nums target)
 
-  let run ~on_result = Problem_runner.run ~cases ~call ~on_result
+  let run () = Problem_runner.run ~cases ~call
 end
