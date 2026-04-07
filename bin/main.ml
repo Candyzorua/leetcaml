@@ -17,12 +17,12 @@ let describe_cmd =
      map
        (anon ("problem" %: string))
        ~f:(fun slug () ->
-         match Leetcaml.Problem.find slug with
+         match Leetcaml.Problems.find slug with
          | None ->
            eprintf "Unknown problem: %s\nAvailable: %s\n"
              slug
              (String.concat ~sep:", "
-                (List.map Leetcaml.Problem.all ~f:(fun p -> p.slug)));
+                (List.map Leetcaml.Problems.all ~f:(fun p -> p.slug)));
            exit 1
          | Some p -> print_string p.description))
 
