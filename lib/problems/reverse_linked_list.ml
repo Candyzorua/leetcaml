@@ -32,19 +32,17 @@ module type S = sig
 end
 
 let cases =
-  [%of_sexp: (Sexp.t * Sexp.t) list] (Sexp.of_string
-    {| ( ((1 2 3 4 5) (5 4 3 2 1))
-         ((1 2)       (2 1))
-         (()          ())
-         ((1)         (1))
-         ((1 2 3)     (3 2 1)) ) |})
+  [ [1;2;3;4;5], [5;4;3;2;1]
+  ; [1;2],       [2;1]
+  ; [],          []
+  ; [1],         [1]
+  ; [1;2;3],     [3;2;1]
+  ]
 
 module Make (Sol : S) = struct
-  let call sexp =
-    let vals = [%of_sexp: int list] sexp in
-    let head = of_list vals in
-    let reversed = Sol.reverse head in
-    [%sexp_of: int list] (to_list reversed)
-
-  let run () = Problem_runner.run ~cases ~call
+  let run () =
+    Problem_runner.run ~cases
+      ~f:(fun vals -> to_list (Sol.reverse (of_list vals)))
+      ~equal:[%equal: int list]
+      ~sexp_of_output:[%sexp_of: int list]
 end
