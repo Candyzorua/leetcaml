@@ -1,10 +1,5 @@
 open Core
-
-type result =
-  | Accepted
-  | Wrong_answer of { case_id : int; msg : string }
-  | Runtime_error of string
-  | Compile_error of string
+open Verdict
 
 let with_temp_dir f =
   let dir = Core_unix.mkdtemp "/tmp/leetcaml_XXXXXX" in
@@ -43,13 +38,13 @@ let load cmxs_file =
     | None    -> Error "solution did not call Host.register"
     | Some r  -> Ok r
 
-let run_runner (module R : Host.Runner) =
+let run_runner (module R : Host.Runner) : Verdict.t =
   try R.run (); Accepted
   with
   | Problem_runner.Failed { case_id; msg } -> Wrong_answer { case_id; msg }
   | exn -> Runtime_error (Exn.to_string exn)
 
-let judge ~submission_file =
+let judge ~submission_file : Verdict.t =
   with_temp_dir (fun dir ->
     match compile ~submission_file ~out_dir:dir with
     | Error msg -> Compile_error msg
