@@ -44,7 +44,8 @@ let run_runner (module R : Host.Runner) : Verdict.t =
   | Problem_runner.Failed { case_id; msg } -> Wrong_answer { case_id; msg }
   | exn -> Runtime_error (Exn.to_string exn)
 
-let judge ~submission_file : Verdict.t =
+let judge submission : Verdict.t =
+  let submission_file = Submission.path submission in
   with_temp_dir (fun dir ->
     match compile ~submission_file ~out_dir:dir with
     | Error msg -> Compile_error msg

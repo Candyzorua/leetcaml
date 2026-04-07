@@ -6,9 +6,13 @@ let run_cmd =
     (let open Command.Param in
      map
        (anon ("solution.ml" %: string))
-       ~f:(fun submission_file () ->
-         let result = Leetcaml.Judge.judge ~submission_file in
-         Leetcaml.Report.print_result result))
+       ~f:(fun file () ->
+         match Leetcaml.Submission.create file with
+         | Error e ->
+           eprintf "%s\n" (Error.to_string_hum e);
+           exit 1
+         | Ok sub ->
+           Leetcaml.Report.print_result (Leetcaml.Judge.judge sub)))
 
 let describe_cmd =
   Command.basic
