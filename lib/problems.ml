@@ -18,6 +18,18 @@ let reverse_linked_list =
   ; description = Reverse_linked_list.description
   }
 
-let all = [ two_sum; reverse_linked_list ]
+let valid_parentheses =
+  { slug        = "valid-parentheses"
+  ; title       = "Valid Parentheses"
+  ; description = Valid_parentheses.description
+  }
+
+let max_subarray =
+  { slug        = "max-subarray"
+  ; title       = "Maximum Subarray"
+  ; description = Max_subarray.description
+  }
+
+let all = [ two_sum; reverse_linked_list; valid_parentheses; max_subarray ]
 
 let find slug = List.find all ~f:(fun p -> String.equal p.slug slug)
