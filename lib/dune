@@ -2,6 +2,6 @@
 
 (library
  (name leetcaml)
- (libraries base stdio core core_unix dynlink)
+ (libraries base stdio core core_unix async dynlink)
  (preprocess
   (pps ppx_jane)))

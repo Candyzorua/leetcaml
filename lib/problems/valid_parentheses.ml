@@ -42,4 +42,5 @@ module Make (Sol : S) = struct
       ~f:Sol.is_valid
       ~equal:Bool.equal
       ~sexp_of_output:[%sexp_of: bool]
+      ~time_limit_ms:5000
 end

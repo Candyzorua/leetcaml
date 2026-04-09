@@ -35,4 +35,5 @@ module Make (Sol : S) = struct
       ~f:Sol.max_subarray
       ~equal:Int.equal
       ~sexp_of_output:[%sexp_of: int]
+      ~time_limit_ms:5000
 end

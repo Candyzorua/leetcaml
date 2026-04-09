@@ -45,4 +45,5 @@ module Make (Sol : S) = struct
       ~f:(fun vals -> to_list (Sol.reverse (of_list vals)))
       ~equal:[%equal: int list]
       ~sexp_of_output:[%sexp_of: int list]
+      ~time_limit_ms:5000
 end

@@ -1,5 +1,6 @@
-(test
+(library
  (name test_leetcaml)
- (libraries leetcaml base)
+ (libraries leetcaml core)
+ (inline_tests)
  (preprocess
   (pps ppx_jane)))

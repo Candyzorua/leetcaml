@@ -33,4 +33,5 @@ module Make (Sol : S) = struct
       ~f:(fun (nums, target) -> Sol.two_sum nums target)
       ~equal:[%equal: int * int]
       ~sexp_of_output:[%sexp_of: int * int]
+      ~time_limit_ms:5000
 end

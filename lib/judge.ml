@@ -42,6 +42,8 @@ let run_runner (module R : Host.Runner) : Verdict.t =
   try R.run (); Accepted
   with
   | Problem_runner.Failed { case_id; msg } -> Wrong_answer { case_id; msg }
+  | Problem_runner.Time_limit_exceeded { case_id; time_limit_ms } ->
+    Time_limit_exceeded { case_id; time_limit_ms }
   | exn -> Runtime_error (Exn.to_string exn)
 
 let judge submission : Verdict.t =
