@@ -13,4 +13,5 @@
   stdio
   core
   core_unix
+  async
   ppx_jane))

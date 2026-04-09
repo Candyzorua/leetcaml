@@ -8,6 +8,7 @@ depends: [
   "stdio"
   "core"
   "core_unix"
+  "async"
   "ppx_jane"
   "odoc" {with-doc}
 ]
