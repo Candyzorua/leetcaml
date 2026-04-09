@@ -45,10 +45,10 @@ let () =
 
 ## Setup
 
-Requires OCaml 5.x and opam packages: `base`, `core`, `core_unix`, `ppx_jane`.
+Requires OCaml 5.x.
 
 ```bash
-opam install base core core_unix ppx_jane
+opam install . --deps-only
 dune build
 ```
 
