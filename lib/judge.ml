@@ -12,8 +12,7 @@ let with_temp_dir f =
 let compile ~submission_file ~out_dir =
   let cmxs_file = Filename.concat out_dir "solution.cmxs" in
   let err_file  = Filename.concat out_dir "compile_err.txt" in
-  let root      = Core_unix.getcwd () in
-  let lib_dir   = Filename.concat root "_build/default/lib" in
+  let lib_dir = Build_config.lib_dir in
   let objs_dir  = Filename.concat lib_dir ".leetcaml.objs/byte" in
   let cmd =
     Printf.sprintf

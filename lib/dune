@@ -5,3 +5,9 @@
  (libraries base stdio core core_unix async dynlink)
  (preprocess
   (pps ppx_jane)))
+
+(rule
+ (target build_config.ml)
+ (action
+  (with-stdout-to %{target}
+   (bash "printf 'let lib_dir = \"%s\"' \"$(pwd)\""))))

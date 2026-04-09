@@ -4,3 +4,12 @@
  (inline_tests)
  (preprocess
   (pps ppx_jane)))
+
+(cram
+ (deps
+  %{bin:leetcaml}
+  fixtures/accepted.ml
+  fixtures/wrong_answer.ml
+  fixtures/compile_error.ml
+  fixtures/runtime_error.ml
+  fixtures/tle.ml))

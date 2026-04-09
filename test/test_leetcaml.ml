@@ -43,14 +43,37 @@ let%test_unit "Leetcaml.Problem_runner: timeout raises Time_limit_exceeded" =
   | `Tle (c, t) -> failwithf "expected (1,100), got (%d,%d)" c t ()
   | `No_exn -> failwith "expected Time_limit_exceeded exception"
 
-(* ---- Leetcaml.Verdict unit tests ---- *)
+(* ---- Report expect tests ---- *)
 
-let%test "Leetcaml.Verdict: constructors" =
-  match (Leetcaml.Verdict.Accepted : Leetcaml.Verdict.t) with
-  | Accepted -> true
-  | _ -> false
+let%expect_test "report Accepted" =
+  Leetcaml.Report.print_result Leetcaml.Verdict.Accepted;
+  [%expect {| Accepted |}]
 
-let%test "Leetcaml.Verdict: TLE carries metadata" =
-  match (Leetcaml.Verdict.Time_limit_exceeded { case_id = 3; time_limit_ms = 5000 } : Leetcaml.Verdict.t) with
-  | Time_limit_exceeded { case_id = 3; time_limit_ms = 5000 } -> true
-  | _ -> false
+let%expect_test "report Wrong Answer" =
+  Leetcaml.Report.print_result
+    (Leetcaml.Verdict.Wrong_answer { case_id = 2; msg = "expected 5\n     got 3" });
+  [%expect {|
+    Wrong Answer
+      Case 2: expected 5
+         got 3 |}]
+
+let%expect_test "report Time Limit Exceeded" =
+  Leetcaml.Report.print_result
+    (Leetcaml.Verdict.Time_limit_exceeded { case_id = 1; time_limit_ms = 5000 });
+  [%expect {|
+    Time Limit Exceeded
+      Case 1 exceeded 5000ms |}]
+
+let%expect_test "report Compile Error" =
+  Leetcaml.Report.print_result
+    (Leetcaml.Verdict.Compile_error "  Error: Unbound value foo  ");
+  [%expect {|
+    Compile Error
+    Error: Unbound value foo |}]
+
+let%expect_test "report Runtime Error" =
+  Leetcaml.Report.print_result
+    (Leetcaml.Verdict.Runtime_error "(Failure \"not implemented\")");
+  [%expect {|
+    Runtime Error
+    (Failure "not implemented") |}]
