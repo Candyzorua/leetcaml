@@ -9,5 +9,6 @@
 (rule
  (target build_config.ml)
  (action
-  (with-stdout-to %{target}
+  (with-stdout-to
+   %{target}
    (bash "printf 'let lib_dir = \"%s\"' \"$(pwd)\""))))

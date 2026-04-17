@@ -3,5 +3,5 @@ module Solution = struct
 end
 
 let () =
-  let module M = Leetcaml.Two_sum.Make(Solution) in
+  let module M = Leetcaml.Two_sum.Make (Solution) in
   Leetcaml.Host.register (module M : Leetcaml.Host.Runner)

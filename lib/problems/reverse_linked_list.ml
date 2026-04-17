@@ -1,6 +1,7 @@
 open Core
 
-let description = {|
+let description =
+  {|
 Reverse Linked List
 ===================
 
@@ -19,9 +20,7 @@ Signature: val reverse : node option -> node option
 
 type node = { val_ : int; next : node option }
 
-let rec to_list = function
-  | None -> []
-  | Some n -> n.val_ :: to_list n.next
+let rec to_list = function None -> [] | Some n -> n.val_ :: to_list n.next
 
 let rec of_list = function
   | [] -> None
@@ -32,18 +31,18 @@ module type S = sig
 end
 
 let cases =
-  [ [1;2;3;4;5], [5;4;3;2;1]
-  ; [1;2],       [2;1]
-  ; [],          []
-  ; [1],         [1]
-  ; [1;2;3],     [3;2;1]
+  [
+    ([ 1; 2; 3; 4; 5 ], [ 5; 4; 3; 2; 1 ]);
+    ([ 1; 2 ], [ 2; 1 ]);
+    ([], []);
+    ([ 1 ], [ 1 ]);
+    ([ 1; 2; 3 ], [ 3; 2; 1 ]);
   ]
 
 module Make (Sol : S) = struct
   let run () =
     Problem_runner.run ~cases
       ~f:(fun vals -> to_list (Sol.reverse (of_list vals)))
-      ~equal:[%equal: int list]
-      ~sexp_of_output:[%sexp_of: int list]
+      ~equal:[%equal: int list] ~sexp_of_output:[%sexp_of: int list]
       ~time_limit_ms:5000
 end

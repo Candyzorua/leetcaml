@@ -1,6 +1,7 @@
 open Core
 
-let description = {|
+let description =
+  {|
 Valid Parentheses
 =================
 
@@ -25,22 +26,20 @@ module type S = sig
 end
 
 let cases =
-  [ "()",      true
-  ; "()[]{}",  true
-  ; "(]",      false
-  ; "([])",    true
-  ; "",        true
-  ; "([)]",    false
-  ; "{[]}",    true
-  ; "(((",     false
-  ; "({[]})",  true
+  [
+    ("()", true);
+    ("()[]{}", true);
+    ("(]", false);
+    ("([])", true);
+    ("", true);
+    ("([)]", false);
+    ("{[]}", true);
+    ("(((", false);
+    ("({[]})", true);
   ]
 
 module Make (Sol : S) = struct
   let run () =
-    Problem_runner.run ~cases
-      ~f:Sol.is_valid
-      ~equal:Bool.equal
-      ~sexp_of_output:[%sexp_of: bool]
-      ~time_limit_ms:5000
+    Problem_runner.run ~cases ~f:Sol.is_valid ~equal:Bool.equal
+      ~sexp_of_output:[%sexp_of: bool] ~time_limit_ms:5000
 end

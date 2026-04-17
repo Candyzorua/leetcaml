@@ -1,6 +1,7 @@
 open Core
 
-let description = {|
+let description =
+  {|
 Two Sum
 =======
 
@@ -22,16 +23,16 @@ module type S = sig
 end
 
 let cases =
-  [ ([|2;7;11;15|], 9), (0, 1)
-  ; ([|3;2;4|],     6), (1, 2)
-  ; ([|3;3|],       6), (0, 1)
+  [
+    (([| 2; 7; 11; 15 |], 9), (0, 1));
+    (([| 3; 2; 4 |], 6), (1, 2));
+    (([| 3; 3 |], 6), (0, 1));
   ]
 
 module Make (Sol : S) = struct
   let run () =
     Problem_runner.run ~cases
       ~f:(fun (nums, target) -> Sol.two_sum nums target)
-      ~equal:[%equal: int * int]
-      ~sexp_of_output:[%sexp_of: int * int]
+      ~equal:[%equal: int * int] ~sexp_of_output:[%sexp_of: int * int]
       ~time_limit_ms:5000
 end

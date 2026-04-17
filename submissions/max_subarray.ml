@@ -10,5 +10,5 @@ module Solution = struct
 end
 
 let () =
-  let module M = Leetcaml.Max_subarray.Make(Solution) in
+  let module M = Leetcaml.Max_subarray.Make (Solution) in
   Leetcaml.Host.register (module M : Leetcaml.Host.Runner)

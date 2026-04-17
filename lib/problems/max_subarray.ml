@@ -1,6 +1,7 @@
 open Core
 
-let description = {|
+let description =
+  {|
 Maximum Subarray
 ================
 
@@ -20,20 +21,18 @@ module type S = sig
 end
 
 let cases =
-  [ [|-2;1;-3;4;-1;2;1;-5;4|],  6
-  ; [|1|],                       1
-  ; [|5;4;-1;7;8|],             23
-  ; [|-1|],                     -1
-  ; [|-2;-1|],                  -1
-  ; [|1;2;3;4|],                10
-  ; [|-1;-2;-3;-4|],            -1
+  [
+    ([| -2; 1; -3; 4; -1; 2; 1; -5; 4 |], 6);
+    ([| 1 |], 1);
+    ([| 5; 4; -1; 7; 8 |], 23);
+    ([| -1 |], -1);
+    ([| -2; -1 |], -1);
+    ([| 1; 2; 3; 4 |], 10);
+    ([| -1; -2; -3; -4 |], -1);
   ]
 
 module Make (Sol : S) = struct
   let run () =
-    Problem_runner.run ~cases
-      ~f:Sol.max_subarray
-      ~equal:Int.equal
-      ~sexp_of_output:[%sexp_of: int]
-      ~time_limit_ms:5000
+    Problem_runner.run ~cases ~f:Sol.max_subarray ~equal:Int.equal
+      ~sexp_of_output:[%sexp_of: int] ~time_limit_ms:5000
 end

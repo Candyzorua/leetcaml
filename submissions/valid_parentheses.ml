@@ -5,14 +5,17 @@ module Solution = struct
       else
         match s.[i] with
         | '(' | '[' | '{' -> go (s.[i] :: stack) (i + 1)
-        | ')' -> (match stack with '(' :: rest -> go rest (i + 1) | _ -> false)
-        | ']' -> (match stack with '[' :: rest -> go rest (i + 1) | _ -> false)
-        | '}' -> (match stack with '{' :: rest -> go rest (i + 1) | _ -> false)
+        | ')' -> (
+            match stack with '(' :: rest -> go rest (i + 1) | _ -> false)
+        | ']' -> (
+            match stack with '[' :: rest -> go rest (i + 1) | _ -> false)
+        | '}' -> (
+            match stack with '{' :: rest -> go rest (i + 1) | _ -> false)
         | _ -> false
     in
     go [] 0
 end
 
 let () =
-  let module M = Leetcaml.Valid_parentheses.Make(Solution) in
+  let module M = Leetcaml.Valid_parentheses.Make (Solution) in
   Leetcaml.Host.register (module M : Leetcaml.Host.Runner)
